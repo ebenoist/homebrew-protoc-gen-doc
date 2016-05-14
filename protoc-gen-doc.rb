@@ -10,7 +10,7 @@ class ProtocGenDoc < Formula
 
   def install
     protobuf_prefix = `#{HOMEBREW_PREFIX}/bin/brew --prefix protobuf`.chomp!
-    ENV["PROTOBUF_PREFIX"] = protobuf_prefix
+    ENV.prepend "PROTOBUF_PREFIX", protobuf_prefix
     system "qmake"
     system "make"
     bin.install "protoc-gen-doc"
