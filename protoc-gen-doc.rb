@@ -9,8 +9,11 @@ class ProtocGenDoc < Formula
   depends_on "qt5"
 
   def install
-    protobuf_prefix = `#{HOMEBREW_PREFIX}/bin/brew --prefix protobuf`.chomp!
-    ENV.prepend "PROTOBUF_PREFIX", protobuf_prefix
+    if not `#{HOMEBREW_PREFIX}/bin/brew ls --versions google-protobuf`.empty?
+      ENV.prepend "PROTOBUF_PREFIX", `#{HOMEBREW_PREFIX}/bin/brew --prefix google-protobuf`.chomp!
+    else
+      ENV.prepend "PROTOBUF_PREFIX", `#{HOMEBREW_PREFIX}/bin/brew --prefix protobuf`.chomp!
+    end
     system "qmake"
     system "make"
     bin.install "protoc-gen-doc"
